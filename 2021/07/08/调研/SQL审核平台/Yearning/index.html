@@ -1,0 +1,401 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>SQL审核平台——Yearning | JiaoJinxin</title><meta name="author" content="JiaoJinxin"><meta name="copyright" content="JiaoJinxin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="整理了对Yearning的简单调研，Yearning是一个采用Go+Vue实现的SQL审核平台，支持多数据库的SQL上线和查询，同时支持丰富的MySQL运维功能，所有功能都兼容手机端操作。"><link rel="shortcut icon" href="https://minio.jiaojinxin.top:40000/public/nav/favicon/favicon.jpg"><link rel="canonical" href="https://blog.jiaojinxin.top/2021/07/08/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://npm.elemecdn.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/@fancyapps/ui/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'SQL审核平台——Yearning',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-06 18:24:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 8 || hour >= 20
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-y/jquery/3.6.0/jquery.min.js" type="application/javascript"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+
+preloader.initLoading()
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://minio.jiaojinxin.top:40000/public/avatar/avatar.jpg" onerror="onerror=null;src='null'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><nav id="nav"><span id="blog-info"><a href="/" title="JiaoJinxin"><span class="site-name">JiaoJinxin</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">SQL审核平台——Yearning</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-07-08T03:12:38.000Z" title="发表于 2021-07-08 11:12:38">2021-07-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-06T10:24:14.531Z" title="更新于 2024-03-06 18:24:14">2024-03-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%B0%83%E7%A0%94/">调研</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/">SQL审核平台</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一-关于-Yearninig"><a href="#一-关于-Yearninig" class="headerlink" title="一 关于 Yearninig"></a>一 关于 Yearninig</h1><p>Mysql 的 SQL 语句审核平台。</p>
+<p>提供查询审计，SQL 审核，SQL 回滚，自定义工作流等多种功能。</p>
+<p>后端逻辑采用 Go 语言实现。</p>
+<p>前端界面采用 vue.js 框架实现。</p>
+<p>官网：<a href="http://yearning.io/">http://yearning.io/</a></p>
+<p>使用文档：<a href="https://guide.yearning.io/">https://guide.yearning.io/</a></p>
+<h1 id="二-添加-Mysql-库"><a href="#二-添加-Mysql-库" class="headerlink" title="二 添加 Mysql 库"></a>二 添加 Mysql 库</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 创建database</span><br><span class="line">create database Yearning CHARACTER SET UTF8mb4 COLLATE utf8mb4_general_ci;</span><br></pre></td></tr></table></figure>
+
+<h1 id="三-安装"><a href="#三-安装" class="headerlink" title="三 安装"></a>三 安装</h1><p>下载地址：<a href="https://github.com/cookieY/Yearning/releases">https://github.com/cookieY/Yearning/releases</a></p>
+<h2 id="1-目录结构"><a href="#1-目录结构" class="headerlink" title="1 目录结构"></a>1 目录结构</h2><ul>
+<li># README</li>
+<li>conf.toml</li>
+<li>docker-compose.yml</li>
+<li>Dockerfile</li>
+<li>Yearning</li>
+</ul>
+<h2 id="2-步骤"><a href="#2-步骤" class="headerlink" title="2 步骤"></a>2 步骤</h2><p>上传、解压压缩包文件，本次下载的压缩文件名为：Yearning-2.3.3.2-linux-amd64.zip</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 将压缩包Yearning-2.3.3.2-linux-amd64.zip上传至linux服务器</span><br><span class="line"># 跳转Yearning目录</span><br><span class="line">cd /opt/Yearning-2.3.3.2/</span><br><span class="line"># 解压</span><br><span class="line">unzip Yearning-2.3.3.2-linux-amd64.zip</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-直接启动"><a href="#2-1-直接启动" class="headerlink" title="2.1 直接启动"></a>2.1 直接启动</h3><ul>
+<li>修改配置文件：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 修改配置文件(vim conf.toml)</span><br><span class="line">[Mysql]</span><br><span class="line"># mysql database</span><br><span class="line">Db = &quot;Yearning&quot;</span><br><span class="line"># mysql数据库地址</span><br><span class="line">Host = &quot;127.0.0.1&quot;</span><br><span class="line"># mysql端口号</span><br><span class="line">Port = &quot;3306&quot;</span><br><span class="line"># mysql用户密码</span><br><span class="line">Password = &quot;root&quot;</span><br><span class="line"># mysql用户名</span><br><span class="line">User = &quot;root&quot;</span><br><span class="line"></span><br><span class="line">[General]   #数据库加解密key，只可更改一次。</span><br><span class="line">SecretKey = &quot;dbcjqheupqjsuwsm&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>初始化并启动 Yearning（非首次启动无需初始化）：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 初始化mysql库</span><br><span class="line">./Yearning install</span><br><span class="line"># 启动</span><br><span class="line">./Yearning run</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-使用-docker-启动"><a href="#2-2-使用-docker-启动" class="headerlink" title="2.2 使用 docker 启动"></a>2.2 使用 docker 启动</h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># 修改docker-compose.yml(vim docker-compose.yml)</span><br><span class="line">version: &#x27;3&#x27;</span><br><span class="line">services:</span><br><span class="line">    yearning:</span><br><span class="line">        image: test/yearning:latest</span><br><span class="line">        build:</span><br><span class="line">            context: .</span><br><span class="line">            dockerfile: Dockerfile</span><br><span class="line">        environment:</span><br><span class="line">            MYSQL_USER: root</span><br><span class="line">            MYSQL_PASSWORD: root</span><br><span class="line">            MYSQL_ADDR: 127.0.0.1:3306</span><br><span class="line">            MYSQL_DB: Yearning</span><br><span class="line">        ports:</span><br><span class="line">            - 8000:8000</span><br><span class="line">        restart: always</span><br><span class="line"></span><br><span class="line"># 使用docker启动</span><br><span class="line">docker-compose up</span><br><span class="line"># 若希望后台启动，则加-d</span><br><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-打开-Yearning"><a href="#2-3-打开-Yearning" class="headerlink" title="2.3 打开 Yearning"></a>2.3 打开 Yearning</h3><p>地址：<a href="localhost:8000">ip:8000</a></p>
+<p>默认用户：admin Yearning_admin</p>
+<h2 id="3-关于-SecretKey"><a href="#3-关于-SecretKey" class="headerlink" title="3 关于 SecretKey"></a>3 关于 SecretKey</h2><p>SecretKey 是 token&#x2F;数据库密码加密&#x2F;解密的 salt。</p>
+<p>建议所有用户在初次安装 Yearning 之前将 SecretKey 更改(不更改将存在安全风险)</p>
+<p><strong>格式: 大小写字母均可, 长度必须为 16 位 如长度不是 16 位将会导致无法新建数据源</strong></p>
+<p><strong>特别注意:</strong></p>
+<p>**此 key 仅可在初次安装时更改!之后不可再次更改!如再次更改会导致之前已存放的数据源密码无法解密,最终导致无法获取相关数据源信息<br>**</p>
+<h1 id="四-功能"><a href="#四-功能" class="headerlink" title="四 功能"></a>四 功能</h1><h2 id="1-提交员"><a href="#1-提交员" class="headerlink" title="1 提交员"></a>1 提交员</h2><h3 id="1-1-首页"><a href="#1-1-首页" class="headerlink" title="1.1 首页"></a>1.1 首页</h3><h4 id="1-1-1-修改个人信息"><a href="#1-1-1-修改个人信息" class="headerlink" title="1.1.1 修改个人信息"></a>1.1.1 修改个人信息</h4><ul>
+<li><p>修改邮箱</p>
+</li>
+<li><p>修改姓名</p>
+</li>
+</ul>
+<h4 id="1-1-2-修改用户密码"><a href="#1-1-2-修改用户密码" class="headerlink" title="1.1.2 修改用户密码"></a>1.1.2 修改用户密码</h4><h4 id="1-1-3-查看用户权限"><a href="#1-1-3-查看用户权限" class="headerlink" title="1.1.3 查看用户权限"></a>1.1.3 查看用户权限</h4><h4 id="1-1-4-查看统计信息"><a href="#1-1-4-查看统计信息" class="headerlink" title="1.1.4 查看统计信息"></a>1.1.4 查看统计信息</h4><ul>
+<li>用户数量、数据源数量、工单数、查询总数</li>
+<li>高频库&#x2F;top 10</li>
+<li>DDL&#x2F;DML 次数统计</li>
+</ul>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708105237136.png" class="" title="首页">
+
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708105314298.png" class="" title="首页">
+
+<h3 id="1-2-我的工单"><a href="#1-2-我的工单" class="headerlink" title="1.2 我的工单"></a>1.2 我的工单</h3><ul>
+<li>当前用户提交的工单列表</li>
+<li>某个工单的详细信息<ul>
+<li>工单信息（提交时的具体信息、当前的执行状态）</li>
+<li>流程步骤（审批步骤）</li>
+<li>流程记录（审批信息）</li>
+<li>SQL 审核（提交的 SQL 语句、SQL 语句的执行结果）</li>
+</ul>
+</li>
+</ul>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708105441309.png" class="" title="我的工单">
+
+<h3 id="1-3-工单提交"><a href="#1-3-工单提交" class="headerlink" title="1.3 工单提交"></a>1.3 工单提交</h3><ul>
+<li>提交 DDL 类型工单</li>
+<li>提交 DML 类型工单</li>
+</ul>
+<p>提交工单步骤：</p>
+<ol>
+<li><p>填写工单基本信息</p>
+<p>选择环境、连接名、库名、审核人、是否备份，以及填写说明后，即可选择进入下一步。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708105527462.png" class="" title="填写工单基本信息">
+</li>
+<li><p>填写 SQL 语句</p>
+<p>填写 SQL，可美化 SQL，可校验 SQL，校验 SQL 为必要操作，校验通过后才可以提交，若校验不通过，可进行原因查询，直至校验通过。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708105629943.png" class="" title="填写SQL语句">
+</li>
+<li><p>确认工单并提交</p>
+<p>确认无误后，即可进行提交，即点击<code>检测语句</code>校测通过后（错误等级为 0），<code>提交工单</code>会变为可点击状态。</p>
+</li>
+</ol>
+<h3 id="1-4-SQL-查询"><a href="#1-4-SQL-查询" class="headerlink" title="1.4 SQL 查询"></a>1.4 SQL 查询</h3><p>选择环境、审核人，填写查询说明后，即可进行提交，若管理员开启了查询审核，需要等待审核人进行审核，若未开启，则直接进入查询页面。</p>
+<p>查询连接时长由管理员设置，若连接时间过期，则需要重新发起查询申请。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708105903572.png" class="" title="提交审核">
+
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708110004852.png" class="" title="选择数据源">
+
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708110153257.png" class="" title="查询界面">
+
+<h2 id="2-操作员"><a href="#2-操作员" class="headerlink" title="2 操作员"></a>2 操作员</h2><p>操作员拥有提交员的所有权限，除以上权限外，还有审核、查询记录功能。</p>
+<h3 id="2-1-审核"><a href="#2-1-审核" class="headerlink" title="2.1 审核"></a>2.1 审核</h3><h4 id="2-1-1-工单"><a href="#2-1-1-工单" class="headerlink" title="2.1.1 工单"></a>2.1.1 工单</h4><p>工单处，可对工单进行审核，同样需要先校验 SQL 语句，若校验通过后才可以流转到下个节点，也可以选择驳回。</p>
+<p>若为最后一个执行节点，则 SQL 语句校验通过后可以手动执行 SQL 语句。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708110259545.png" class="" title="审核列表">
+
+<h4 id="2-1-2-查询"><a href="#2-1-2-查询" class="headerlink" title="2.1.2 查询"></a>2.1.2 查询</h4><p>查看查询连接记录，若开启了查询审核，则可在该处对查询进行审核。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708110351006.png" class="" title="查询">
+
+<h3 id="2-2-记录"><a href="#2-2-记录" class="headerlink" title="2.2 记录"></a>2.2 记录</h3><h4 id="2-2-1-工单记录"><a href="#2-2-1-工单记录" class="headerlink" title="2.2.1 工单记录"></a>2.2.1 工单记录</h4><p>可查询工单的执行记录，以及工单的详细信息。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708110427081.png" class="" title="历史工单记录列表">
+
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708110655347.png" class="" title="历史工单记录详情">
+
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708110720547.png" class="" title="历史工单记录详情">
+
+<h4 id="2-2-2-查询记录"><a href="#2-2-2-查询记录" class="headerlink" title="2.2.2 查询记录"></a>2.2.2 查询记录</h4><p>可查看查询的执行记录，以及查询的详细信息，包括查询数据源、数据库、SQL 语句、SQL 执行耗时，以及 SQL 的执行次序。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708110501800.png" class="" title="历史查询记录列表">
+
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708110537054.png" class="" title="历史查询详情">
+
+<h2 id="3-管理员"><a href="#3-管理员" class="headerlink" title="3 管理员"></a>3 管理员</h2><p>管理员拥有的权限组中有数据源的读写权限，则也可以发起工单、查询。</p>
+<p>若权限组中审核人选择了管理员，则管理员也拥有操作员的审批权限。</p>
+<h3 id="3-1-管理"><a href="#3-1-管理" class="headerlink" title="3.1 管理"></a>3.1 管理</h3><h4 id="3-1-1-用户"><a href="#3-1-1-用户" class="headerlink" title="3.1.1 用户"></a>3.1.1 用户</h4><p>可以新增用户、修改用户密码、给用户分配权限、删除用户、查询用户的详细信息。</p>
+<p>其中 admin 用户（默认用户）初始时只有<strong>超级管理员</strong>角色，可以为 admin 用户配置其他角色组。</p>
+<p>角色只有提交人、操作人两种，其中操作人拥有审核、执行权限以及提交人的所有权限，提交人只能提交工单或提交查询。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708100303398.png" class="" title="添加用户">
+
+<h4 id="3-1-2-数据库"><a href="#3-1-2-数据库" class="headerlink" title="3.1.2 数据库"></a>3.1.2 数据库</h4><p>可以添加数据库信息。</p>
+<p><strong>注</strong>：</p>
+<ol>
+<li>保存前可以进行连接测试，连接成功后再进行保存。</li>
+<li>数据源名称需唯一。</li>
+</ol>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708100443774.png" class="" title="添加数据库">
+
+<h4 id="3-1-3-权限组"><a href="#3-1-3-权限组" class="headerlink" title="3.1.3 权限组"></a>3.1.3 权限组</h4><p>添加权限组，可为每个权限组配置响应的操作权限。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708100552897.png" class="" title="创建权限组">
+
+<h4 id="3-1-4-流程模板"><a href="#3-1-4-流程模板" class="headerlink" title="3.1.4 流程模板"></a>3.1.4 流程模板</h4><p>为每个环境创建自己的审核流程，第一阶段默认为提交，可以添加审核、执行流程，且最后一阶段只能为执行。</p>
+<p><strong>注</strong>：</p>
+<ol>
+<li>中间审核人最多支持 5 层。</li>
+<li>仅允许拥有一个执行阶段，即最后一个阶段只能为执行阶段。</li>
+<li>如对现有流程进行修改，需将目前该流程下所有工单流转完成，否则可能导致流程错乱。</li>
+<li>在使用之前需要先配置好流程模板，否则提交人在提交工单时无法选择数据库。</li>
+</ol>
+<h4 id="3-1-5-审核规则"><a href="#3-1-5-审核规则" class="headerlink" title="3.1.5 审核规则"></a>3.1.5 审核规则</h4><p>可以开启 SQL 语句的审核规则，Yearning 中已内置不少规则。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708103217321.png" class="" title="Yearning内置规则">
+
+<h4 id="3-1-6-自动任务"><a href="#3-1-6-自动任务" class="headerlink" title="3.1.6 自动任务"></a>3.1.6 自动任务</h4><p>可以开启<strong>增</strong>、<strong>删</strong>、<strong>改</strong>的定时任务，即开启定时任务后，提交 DML 工单时若选择了定时执行时间，则在到达约定时间时可以自行执行。</p>
+<p><strong>注</strong>：</p>
+<p>仅测试，若开启了定时任务，则 DML 工单将不在途径审核流程，在提交员提交后，操作员无法审核，且到达约定时间时任务被自行执行，故该功能目前暂无实用性。</p>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708103721995.png" class="" title="autoTask">
+
+<h4 id="3-1-7-设置"><a href="#3-1-7-设置" class="headerlink" title="3.1.7 设置"></a>3.1.7 设置</h4><p>可以进行 LDAP 设置，登录支持 LDAP 登录。</p>
+<p>可以设置消息推送，支持 webhook 推送、email 推送。</p>
+<p>还拥有进阶设置：</p>
+<ol>
+<li>查询最大 limit 限制，防止大量全表查询。</li>
+<li>自定义环境。</li>
+<li>排除数据库，即设置了排除的数据库（mysql 的 dabatase），则该 database 将不允许被连接查询、执行 SQL 语句。</li>
+<li>脱敏字段设置（根据字段名设置），查询时脱敏字段值会被隐藏。</li>
+<li>设置是否开启查询审核、查询导出，以及设置查询连接时长，超过该时长后需要重新提交查询。</li>
+<li>设置是否允许注册，若开启后，用户可自行注册，而不用超级管理员进行用户创建。</li>
+<li>删除指定日期前的工单记录、查询记录。</li>
+</ol>
+<img src="https://minio.jiaojinxin.top:40000/blog-hexo/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/image-20210708104701967.png" class="" title="进阶设置">
+
+<h3 id="3-2-公告"><a href="#3-2-公告" class="headerlink" title="3.2 公告"></a>3.2 公告</h3><p>可以实时发布全员可见的公告（markdown 格式）</p>
+<h1 id="五-建议"><a href="#五-建议" class="headerlink" title="五 建议"></a>五 建议</h1><ol>
+<li><p>这里 Yearning 官方建议读写库做分离，保证不影响线上环境的运行。</p>
+</li>
+<li><p>建议为每个项目分配对应的数据库用户，且该用户只有该项目所需要连接的 database 的权限，因为做权限管理时，将数据源与权限组做关联，则该权限组拥有该数据源配置的用户所拥有的所有 db 的权限。</p>
+</li>
+<li><p>针对读写权限分离，这里有两个方案：</p>
+<ol>
+<li>分别创建拥有读写操作权限的数据库用户与拥有只读权限的数据库用户，添加数据源时添加两个数据源（读写、只读）</li>
+<li>创建一个拥有读写操作权限的数据库用户，在添加权限组时，区分 DDL、DML、DQL 权限，这里建议为每个项目创建至少三个权限组，将 DDL、DML、DQL 三个权限做拆分，三个权限组分别拥有不同的权限，即 DDL 权限组、DML 权限组、DQL 权限组，若 DDL 不通过该流程，则至少创建两个权限组。</li>
+</ol>
+</li>
+</ol>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%B0%83%E7%A0%94/">调研</a><a class="post-meta__tags" href="/tags/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/">SQL审核平台</a><a class="post-meta__tags" href="/tags/Yearning/">Yearning</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/09/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Archery/" title="SQL审核平台——Archery"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SQL审核平台——Archery</div></div></a></div><div class="next-post pull-right"><a href="/2021/06/15/%E8%B0%83%E7%A0%94/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8EDrools%E8%AF%AD%E6%B3%95%E6%95%B4%E7%90%86/" title="规则引擎Drools语法整理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">规则引擎Drools语法整理</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/07/09/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Archery/" title="SQL审核平台——Archery"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-09</div><div class="title">SQL审核平台——Archery</div></div></a></div><div><a href="/2021/06/15/%E8%B0%83%E7%A0%94/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8EDrools%E8%AF%AD%E6%B3%95%E6%95%B4%E7%90%86/" title="规则引擎Drools语法整理"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-15</div><div class="title">规则引擎Drools语法整理</div></div></a></div><div><a href="/2021/06/08/%E8%B0%83%E7%A0%94/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8EDrools%E5%AD%A6%E4%B9%A0/" title="规则引擎Drools学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-08</div><div class="title">规则引擎Drools学习</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://minio.jiaojinxin.top:40000/public/avatar/avatar.jpg" onerror="this.onerror=null;this.src='/null'" alt="avatar"/></div><div class="author-info__name">JiaoJinxin</div><div class="author-info__description">记录学习，记录生活。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/JiaoJinxin54" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:jiaojx54@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80-%E5%85%B3%E4%BA%8E-Yearninig"><span class="toc-text">一 关于 Yearninig</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C-%E6%B7%BB%E5%8A%A0-Mysql-%E5%BA%93"><span class="toc-text">二 添加 Mysql 库</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89-%E5%AE%89%E8%A3%85"><span class="toc-text">三 安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="toc-text">1 目录结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%AD%A5%E9%AA%A4"><span class="toc-text">2 步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%9B%B4%E6%8E%A5%E5%90%AF%E5%8A%A8"><span class="toc-text">2.1 直接启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%BD%BF%E7%94%A8-docker-%E5%90%AF%E5%8A%A8"><span class="toc-text">2.2 使用 docker 启动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%89%93%E5%BC%80-Yearning"><span class="toc-text">2.3 打开 Yearning</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B3%E4%BA%8E-SecretKey"><span class="toc-text">3 关于 SecretKey</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B-%E5%8A%9F%E8%83%BD"><span class="toc-text">四 功能</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%8F%90%E4%BA%A4%E5%91%98"><span class="toc-text">1 提交员</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E9%A6%96%E9%A1%B5"><span class="toc-text">1.1 首页</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-1-%E4%BF%AE%E6%94%B9%E4%B8%AA%E4%BA%BA%E4%BF%A1%E6%81%AF"><span class="toc-text">1.1.1 修改个人信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-2-%E4%BF%AE%E6%94%B9%E7%94%A8%E6%88%B7%E5%AF%86%E7%A0%81"><span class="toc-text">1.1.2 修改用户密码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-3-%E6%9F%A5%E7%9C%8B%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90"><span class="toc-text">1.1.3 查看用户权限</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-1-4-%E6%9F%A5%E7%9C%8B%E7%BB%9F%E8%AE%A1%E4%BF%A1%E6%81%AF"><span class="toc-text">1.1.4 查看统计信息</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%88%91%E7%9A%84%E5%B7%A5%E5%8D%95"><span class="toc-text">1.2 我的工单</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%B7%A5%E5%8D%95%E6%8F%90%E4%BA%A4"><span class="toc-text">1.3 工单提交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-SQL-%E6%9F%A5%E8%AF%A2"><span class="toc-text">1.4 SQL 查询</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%93%8D%E4%BD%9C%E5%91%98"><span class="toc-text">2 操作员</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%AE%A1%E6%A0%B8"><span class="toc-text">2.1 审核</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-1-%E5%B7%A5%E5%8D%95"><span class="toc-text">2.1.1 工单</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-1-2-%E6%9F%A5%E8%AF%A2"><span class="toc-text">2.1.2 查询</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%AE%B0%E5%BD%95"><span class="toc-text">2.2 记录</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-1-%E5%B7%A5%E5%8D%95%E8%AE%B0%E5%BD%95"><span class="toc-text">2.2.1 工单记录</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-2-%E6%9F%A5%E8%AF%A2%E8%AE%B0%E5%BD%95"><span class="toc-text">2.2.2 查询记录</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E7%AE%A1%E7%90%86%E5%91%98"><span class="toc-text">3 管理员</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%AE%A1%E7%90%86"><span class="toc-text">3.1 管理</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-1-%E7%94%A8%E6%88%B7"><span class="toc-text">3.1.1 用户</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-2-%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-text">3.1.2 数据库</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-3-%E6%9D%83%E9%99%90%E7%BB%84"><span class="toc-text">3.1.3 权限组</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-4-%E6%B5%81%E7%A8%8B%E6%A8%A1%E6%9D%BF"><span class="toc-text">3.1.4 流程模板</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-5-%E5%AE%A1%E6%A0%B8%E8%A7%84%E5%88%99"><span class="toc-text">3.1.5 审核规则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-6-%E8%87%AA%E5%8A%A8%E4%BB%BB%E5%8A%A1"><span class="toc-text">3.1.6 自动任务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-1-7-%E8%AE%BE%E7%BD%AE"><span class="toc-text">3.1.7 设置</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%85%AC%E5%91%8A"><span class="toc-text">3.2 公告</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94-%E5%BB%BA%E8%AE%AE"><span class="toc-text">五 建议</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/13/%E7%AC%94%E8%AE%B0/node/nrm%20use%20%E6%9C%AA%E7%94%9F%E6%95%88/" title="nrm use 未生效">nrm use 未生效</a><time datetime="2023-06-13T14:47:18.000Z" title="发表于 2023-06-13 22:47:18">2023-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/13/%E7%AC%94%E8%AE%B0/node/%E5%AE%89%E8%A3%85nrm%E5%90%8E%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99require()%20of%20ES%20modules%20is%20not%20supported/" title="安装nrm后使用报错require() of ES modules is not supported">安装nrm后使用报错require() of ES modules is not supported</a><time datetime="2023-06-13T14:38:38.000Z" title="发表于 2023-06-13 22:38:38">2023-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/13/%E7%AC%94%E8%AE%B0/node/CentOS%E5%AE%89%E8%A3%85nvm/" title="CentOS安装nvm">CentOS安装nvm</a><time datetime="2023-06-13T14:21:05.000Z" title="发表于 2023-06-13 22:21:05">2023-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/13/esxi/Esxi8-0%E9%83%A8%E7%BD%B2CentOS/" title="Esxi8.0部署CentOS">Esxi8.0部署CentOS</a><time datetime="2023-06-13T02:13:15.000Z" title="发表于 2023-06-13 10:13:15">2023-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/12/docker/docker%E9%83%A8%E7%BD%B2%E6%9E%81%E7%8B%90Gitlab/" title="docker部署极狐Gitlab">docker部署极狐Gitlab</a><time datetime="2023-06-12T07:44:19.000Z" title="发表于 2023-06-12 15:44:19">2023-06-12</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By JiaoJinxin</div><div class="framework-info"><span>框架 </span><a href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://npm.elemecdn.com/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/node-snackbar/0.1.16/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/pangu/4.0.7/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/mermaid/8.14.0/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://npm.elemecdn.com/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://npm.elemecdn.com/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script></div></body></html>

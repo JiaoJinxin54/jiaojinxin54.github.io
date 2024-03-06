@@ -1,0 +1,382 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>规则引擎Drools语法整理 | JiaoJinxin</title><meta name="author" content="JiaoJinxin"><meta name="copyright" content="JiaoJinxin"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="整理了drools的部分语法，随着后续的使用，逐步扩展。"><link rel="shortcut icon" href="https://minio.jiaojinxin.top:40000/public/nav/favicon/favicon.jpg"><link rel="canonical" href="https://blog.jiaojinxin.top/2021/06/15/%E8%B0%83%E7%A0%94/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8EDrools%E8%AF%AD%E6%B3%95%E6%95%B4%E7%90%86/"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://npm.elemecdn.com/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/node-snackbar/0.1.16/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/@fancyapps/ui/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#49b1f5","bgDark":"#1f1f1f","position":"bottom-left"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '规则引擎Drools语法整理',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-06 18:21:52'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 8 || hour >= 20
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(function (e) {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><script src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-y/jquery/3.6.0/jquery.min.js" type="application/javascript"></script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = 'hidden';
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+
+preloader.initLoading()
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (false) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://minio.jiaojinxin.top:40000/public/avatar/avatar.jpg" onerror="onerror=null;src='null'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><nav id="nav"><span id="blog-info"><a href="/" title="JiaoJinxin"><span class="site-name">JiaoJinxin</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于我</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">规则引擎Drools语法整理</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2021-06-15T01:27:38.000Z" title="发表于 2021-06-15 09:27:38">2021-06-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-06T10:21:52.667Z" title="更新于 2024-03-06 18:21:52">2024-03-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%B0%83%E7%A0%94/">调研</a><i class="fas fa-angle-right post-meta-separator"></i><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%B0%83%E7%A0%94/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/">规则引擎</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h2 id="规则文件的基本组成部分"><a href="#规则文件的基本组成部分" class="headerlink" title="规则文件的基本组成部分"></a>规则文件的基本组成部分</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 包名，类似java类的package，但区别在于该处的包名并不一定非要与文件所属路径一致</span><br><span class="line">package packageName</span><br><span class="line">// 导入依赖的class，与java类中的import用法一致</span><br><span class="line">import importClass</span><br><span class="line">// 全局变量，可选项，类似java类中属性的定义（global 全局变量类型 全局变量名）</span><br><span class="line">global globalType globalName</span><br><span class="line">// 规则体，ruleName为规则名称，若为连续字符可不加双引号，可支持中文</span><br><span class="line">rule &quot;ruleName&quot;</span><br><span class="line">    // 规则属性，可选项</span><br><span class="line">    attributes</span><br><span class="line">    when</span><br><span class="line">        // 条件部分</span><br><span class="line">        LHS</span><br><span class="line">    then</span><br><span class="line">        // 结果部分，即满足条件后执行的内容</span><br><span class="line">        RHS</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package rules</span><br><span class="line"></span><br><span class="line">rule 规则示例</span><br><span class="line">    when</span><br><span class="line">        i:Integer(value == 1)</span><br><span class="line">    then</span><br><span class="line">        System.out.println(&quot;hello word&quot;);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h2 id="when部分"><a href="#when部分" class="headerlink" title="when部分"></a>when部分</h2><h3 id="比较操作符"><a href="#比较操作符" class="headerlink" title="比较操作符"></a>比较操作符</h3><table>
+<thead>
+<tr>
+<th align="center">符号</th>
+<th align="center">说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">&gt;</td>
+<td align="center">大于</td>
+</tr>
+<tr>
+<td align="center">&lt;</td>
+<td align="center">小于</td>
+</tr>
+<tr>
+<td align="center">&gt;&#x3D;</td>
+<td align="center">大于等于</td>
+</tr>
+<tr>
+<td align="center">&lt;&#x3D;</td>
+<td align="center">小于等于</td>
+</tr>
+<tr>
+<td align="center">&#x3D;&#x3D;</td>
+<td align="center">等于</td>
+</tr>
+<tr>
+<td align="center">!&#x3D;</td>
+<td align="center">不等于</td>
+</tr>
+<tr>
+<td align="center">contains</td>
+<td align="center">检查一个Fact对象的某个属性值是否包含一个指定的对象值</td>
+</tr>
+<tr>
+<td align="center">not contains</td>
+<td align="center">检查一个Fact对象的某个属性值是否不包含一个指定的对象值</td>
+</tr>
+<tr>
+<td align="center">memberOf</td>
+<td align="center">判断一个Fact对象的某个属性是否在一个或多个集合中</td>
+</tr>
+<tr>
+<td align="center">not memberOf</td>
+<td align="center">判断一个Fact对象的某个属性是否不在一个或多个集合中</td>
+</tr>
+<tr>
+<td align="center">matches</td>
+<td align="center">判断一个Fact对象的属性是否与提供的标准的Java正则表达式进行匹配</td>
+</tr>
+<tr>
+<td align="center">not matches</td>
+<td align="center">判断一个Fact对象的属性是否不与提供的标准的Java正则表达式进行匹配</td>
+</tr>
+</tbody></table>
+<p>前面种与java中使用方式一致，后六种的语法如下示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rule 规则示例</span><br><span class="line">    when</span><br><span class="line">        user:User(roles contains &quot;管理员&quot;)</span><br><span class="line">        user:User(roles not contains &quot;管理员&quot;)</span><br><span class="line">        user:User(&quot;管理员&quot; memberOf roles)</span><br><span class="line">        user:User(&quot;管理员&quot; not memberOf roles)</span><br><span class="line">        user:User(name matches &quot;正则表达式&quot;)</span><br><span class="line">        user:User(name not matches &quot;正则表达式&quot;)</span><br><span class="line">    then</span><br><span class="line">        System.out.println(&quot;规则示例&quot;);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h3 id="多条件"><a href="#多条件" class="headerlink" title="多条件"></a>多条件</h3><p>可以使用<code>and</code>、<code>or</code>、<code>&amp;&amp;</code>、<code>||</code>、<code>,</code>，其中<code>,</code>表示与，注意使用时，不要混合使用。<br>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rule 规则示例</span><br><span class="line">    when</span><br><span class="line">        user:User(name == &quot;张三&quot; &amp;&amp; age &gt;= 18)</span><br><span class="line">    then </span><br><span class="line">        System.out.println(&quot;规则示例：&quot;);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h3 id="循环集合"><a href="#循环集合" class="headerlink" title="循环集合"></a>循环集合</h3><p>关键字<code>from</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rule 规则示例</span><br><span class="line">    when</span><br><span class="line">        list:ArrayList()</span><br><span class="line">        user:User() from list</span><br><span class="line">    then</span><br><span class="line">        System.out.println(user.getName());</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h3 id="集合中的所有对象均需要满足某些条件"><a href="#集合中的所有对象均需要满足某些条件" class="headerlink" title="集合中的所有对象均需要满足某些条件"></a>集合中的所有对象均需要满足某些条件</h3><p>关键字<code>forall</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rule 规则示例</span><br><span class="line">    when</span><br><span class="line">        list:ArrayList()</span><br><span class="line">        forall(user:User(age &gt;= 18) from list)</span><br><span class="line">    then</span><br><span class="line">        System.out.println(&quot;规则示例：所有User都需要满足年龄大于等于18&quot;);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h3 id="集合中找出满足条件的放入新集合中"><a href="#集合中找出满足条件的放入新集合中" class="headerlink" title="集合中找出满足条件的放入新集合中"></a>集合中找出满足条件的放入新集合中</h3><p>关键字<code>collect</code></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">rule 规则示例</span><br><span class="line">    when</span><br><span class="line">        list:ArrayList()</span><br><span class="line">        user:User(age &gt;= 18) from list</span><br><span class="line">        newList:ArrayList() from collect(User(age &gt;= 18) from list)</span><br><span class="line">    then</span><br><span class="line">        System.out.println(&quot;规则示例：所有User都需要满足年龄大于等于18&quot;);</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<h2 id="then部分"><a href="#then部分" class="headerlink" title="then部分"></a>then部分</h2><p>支持java代码，格式同java代码一致。</p>
+<p>另外drools有内置方法可以使用：<code>update</code>，<code>insert</code>，<code>retract</code>，注：使用内置方法时，会导致规则的重新匹配。</p>
+<h3 id="update（更新）"><a href="#update（更新）" class="headerlink" title="update（更新）"></a>update（更新）</h3><p>在不同的规则中修改了对象的属性，若不使用update，则相互之间无法读取到修改后的属性值。<br>使用update方法后，其他规则中则可以读取到当前规则修改的属性值。</p>
+<h3 id="insert（新增）"><a href="#insert（新增）" class="headerlink" title="insert（新增）"></a>insert（新增）</h3><p>向工作空间中新增新的数据。</p>
+<h3 id="retract（删除）"><a href="#retract（删除）" class="headerlink" title="retract（删除）"></a>retract（删除）</h3><p>删除工作空间中的数据。</p>
+<h2 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">global Integer count</span><br></pre></td></tr></table></figure>
+
+<h2 id="attributes部分"><a href="#attributes部分" class="headerlink" title="attributes部分"></a>attributes部分</h2><table>
+<thead>
+<tr>
+<th align="center">属性名</th>
+<th align="center">属性可选值</th>
+<th align="center">属性说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">salience</td>
+<td align="center">数值类型，如：1，2，3</td>
+<td align="center">指定规则执行优先级，数值越大越优先执行，不指定时默认按照在文件中的顺序执行</td>
+</tr>
+<tr>
+<td align="center">dialect</td>
+<td align="center">java&#x2F;mvel</td>
+<td align="center">指定规则使用的语言类型，取值为java和mvel，默认为java</td>
+</tr>
+<tr>
+<td align="center">enabled</td>
+<td align="center">true&#x2F;false</td>
+<td align="center">指定规则是否启用，默认为true，可通过指定false暂不启用</td>
+</tr>
+<tr>
+<td align="center">date-effective</td>
+<td align="center">时间字符串，如：”2021-06-15 12:00:00”</td>
+<td align="center">指定规则生效时间，例如限时优惠活动时使用，注：使用时需要传入日期格式，且一定要与规则中的格式一致</td>
+</tr>
+<tr>
+<td align="center">date-expires</td>
+<td align="center">时间字符串，如：”2021-06-15 13:00:00</td>
+<td align="center">指定规则失效时间，例如限时优惠活动时使用</td>
+</tr>
+<tr>
+<td align="center">activation-group</td>
+<td align="center">分组字符串</td>
+<td align="center">激活分组，具有相同分组名称的规则只能有一个规则触发</td>
+</tr>
+<tr>
+<td align="center">agenda-group</td>
+<td align="center">分组字符串</td>
+<td align="center">议程分组，只有获取焦点的组中的规则才有可能触发</td>
+</tr>
+<tr>
+<td align="center">auto-focus</td>
+<td align="center">true&#x2F;false</td>
+<td align="center">自动获取焦点，一般结合agenda-group一起使用</td>
+</tr>
+<tr>
+<td align="center">no-loop</td>
+<td align="center">true&#x2F;false</td>
+<td align="center">不循环调用，默认为false，若使用了内置方法导致规则重新匹配，可能导致某一个规则无限执行，此时可以设置该值为true</td>
+</tr>
+<tr>
+<td align="center">timer</td>
+<td align="center">方式1（从int1秒后开始每int2秒执行一次）：timer (int1, int2)；方式2：timer (cron:cron表达式)</td>
+<td align="center">定时器，指定规则触发的时间</td>
+</tr>
+</tbody></table>
+<h2 id="自定义函数function"><a href="#自定义函数function" class="headerlink" title="自定义函数function"></a>自定义函数function</h2><p>function类似java代码中的方法，语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function 返回值类型 函数名(可选参数)&#123;</span><br><span class="line">    //逻辑代码</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">function void f1()&#123;</span><br><span class="line">    System.out.println(&quot;f1&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function void f2(String str)&#123;</span><br><span class="line">    System.out.println(&quot;f1：&quot; + str);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function String f3()&#123;</span><br><span class="line">    return &quot;f3&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function String f4(String str)&#123;</span><br><span class="line">    return &quot;f4：&quot; + str;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="查询query"><a href="#查询query" class="headerlink" title="查询query"></a>查询query</h2><p>查询只存在LHS部分，即在工作空间中查找符合条件的对象，语法如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">query 查询的名称(可选参数)</span><br><span class="line">    LHS</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">query 查询成年人</span><br><span class="line">    user:User(age &gt;= 18)</span><br><span class="line">end</span><br><span class="line"></span><br><span class="line">query 查询固定名字的人(String sname)</span><br><span class="line">    user:User(name == sname)</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+</article><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%B0%83%E7%A0%94/">调研</a><a class="post-meta__tags" href="/tags/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/">规则引擎</a><a class="post-meta__tags" href="/tags/Drools/">Drools</a></div><div class="post_share"></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/07/08/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Yearning/" title="SQL审核平台——Yearning"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">SQL审核平台——Yearning</div></div></a></div><div class="next-post pull-right"><a href="/2021/06/08/%E8%B0%83%E7%A0%94/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8EDrools%E9%83%A8%E7%BD%B2DroolsWorkBench%EF%BC%88Docker%EF%BC%89/" title="规则引擎Drools部署DroolsWorkBench（Docker）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">规则引擎Drools部署DroolsWorkBench（Docker）</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2021/06/08/%E8%B0%83%E7%A0%94/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8EDrools%E5%AD%A6%E4%B9%A0/" title="规则引擎Drools学习"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-08</div><div class="title">规则引擎Drools学习</div></div></a></div><div><a href="/2021/06/08/%E8%B0%83%E7%A0%94/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8E/%E8%A7%84%E5%88%99%E5%BC%95%E6%93%8EDrools%E9%83%A8%E7%BD%B2DroolsWorkBench%EF%BC%88Docker%EF%BC%89/" title="规则引擎Drools部署DroolsWorkBench（Docker）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-06-08</div><div class="title">规则引擎Drools部署DroolsWorkBench（Docker）</div></div></a></div><div><a href="/2021/07/09/%E8%B0%83%E7%A0%94/SQL%E5%AE%A1%E6%A0%B8%E5%B9%B3%E5%8F%B0/Archery/" title="SQL审核平台——Archery"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-07-09</div><div class="title">SQL审核平台——Archery</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://minio.jiaojinxin.top:40000/public/avatar/avatar.jpg" onerror="this.onerror=null;this.src='/null'" alt="avatar"/></div><div class="author-info__name">JiaoJinxin</div><div class="author-info__description">记录学习，记录生活。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">17</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">23</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/JiaoJinxin54" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:jiaojx54@163.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%84%E5%88%99%E6%96%87%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%84%E6%88%90%E9%83%A8%E5%88%86"><span class="toc-text">规则文件的基本组成部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#when%E9%83%A8%E5%88%86"><span class="toc-text">when部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AF%94%E8%BE%83%E6%93%8D%E4%BD%9C%E7%AC%A6"><span class="toc-text">比较操作符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%9D%A1%E4%BB%B6"><span class="toc-text">多条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF%E9%9B%86%E5%90%88"><span class="toc-text">循环集合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E4%B8%AD%E7%9A%84%E6%89%80%E6%9C%89%E5%AF%B9%E8%B1%A1%E5%9D%87%E9%9C%80%E8%A6%81%E6%BB%A1%E8%B6%B3%E6%9F%90%E4%BA%9B%E6%9D%A1%E4%BB%B6"><span class="toc-text">集合中的所有对象均需要满足某些条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%86%E5%90%88%E4%B8%AD%E6%89%BE%E5%87%BA%E6%BB%A1%E8%B6%B3%E6%9D%A1%E4%BB%B6%E7%9A%84%E6%94%BE%E5%85%A5%E6%96%B0%E9%9B%86%E5%90%88%E4%B8%AD"><span class="toc-text">集合中找出满足条件的放入新集合中</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#then%E9%83%A8%E5%88%86"><span class="toc-text">then部分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#update%EF%BC%88%E6%9B%B4%E6%96%B0%EF%BC%89"><span class="toc-text">update（更新）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#insert%EF%BC%88%E6%96%B0%E5%A2%9E%EF%BC%89"><span class="toc-text">insert（新增）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#retract%EF%BC%88%E5%88%A0%E9%99%A4%EF%BC%89"><span class="toc-text">retract（删除）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F"><span class="toc-text">全局变量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#attributes%E9%83%A8%E5%88%86"><span class="toc-text">attributes部分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%87%BD%E6%95%B0function"><span class="toc-text">自定义函数function</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2query"><span class="toc-text">查询query</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/13/%E7%AC%94%E8%AE%B0/node/nrm%20use%20%E6%9C%AA%E7%94%9F%E6%95%88/" title="nrm use 未生效">nrm use 未生效</a><time datetime="2023-06-13T14:47:18.000Z" title="发表于 2023-06-13 22:47:18">2023-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/13/%E7%AC%94%E8%AE%B0/node/%E5%AE%89%E8%A3%85nrm%E5%90%8E%E4%BD%BF%E7%94%A8%E6%8A%A5%E9%94%99require()%20of%20ES%20modules%20is%20not%20supported/" title="安装nrm后使用报错require() of ES modules is not supported">安装nrm后使用报错require() of ES modules is not supported</a><time datetime="2023-06-13T14:38:38.000Z" title="发表于 2023-06-13 22:38:38">2023-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/13/%E7%AC%94%E8%AE%B0/node/CentOS%E5%AE%89%E8%A3%85nvm/" title="CentOS安装nvm">CentOS安装nvm</a><time datetime="2023-06-13T14:21:05.000Z" title="发表于 2023-06-13 22:21:05">2023-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/13/esxi/Esxi8-0%E9%83%A8%E7%BD%B2CentOS/" title="Esxi8.0部署CentOS">Esxi8.0部署CentOS</a><time datetime="2023-06-13T02:13:15.000Z" title="发表于 2023-06-13 10:13:15">2023-06-13</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/06/12/docker/docker%E9%83%A8%E7%BD%B2%E6%9E%81%E7%8B%90Gitlab/" title="docker部署极狐Gitlab">docker部署极狐Gitlab</a><time datetime="2023-06-12T07:44:19.000Z" title="发表于 2023-06-12 15:44:19">2023-06-12</time></div></div></div></div></div></div></main><footer id="footer" style="background: linear-gradient(20deg, #0062be, #925696, #cc426e, #fb0347)"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By JiaoJinxin</div><div class="framework-info"><span>框架 </span><a href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"></div><div id="rightside-config-show"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://npm.elemecdn.com/@fancyapps/ui/dist/fancybox/fancybox.umd.js"></script><script src="https://lf26-cdn-tos.bytecdntp.com/cdn/expire-1-M/node-snackbar/0.1.16/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/pangu/4.0.7/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/mermaid/8.14.0/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script defer="defer" id="fluttering_ribbon" mobile="false" src="https://npm.elemecdn.com/butterfly-extsrc/dist/canvas-fluttering-ribbon.min.js"></script><script id="click-heart" src="https://npm.elemecdn.com/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script></div></body></html>
